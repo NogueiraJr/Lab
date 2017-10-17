@@ -7,17 +7,21 @@ namespace Application
 {
     public class ArquivoFinalCsv : Arquivo
     {
-        public List<string> LinhasEntrada { get; set; }
-        List<Campos> DadosFinais { get; set; }
-        public List<string> LinhasSaida { get; set; }
-        //private const string PrimeiraLinhaCsv = "Descricao;Valor;DataVencimento;Categoria;SubCategoria;Conta;Observacao";
+		//private const string PrimeiraLinhaCsv = "Descricao;Valor;DataVencimento;Categoria;SubCategoria;Conta;Observacao";
+        private const string TransferenciasInternas = "TransferenciasInternas";
+        private const string CartaoCredito = "CartaoCredito";
         private const string ContaJuridica = "Teste";
 		private const string SeparadorCampoApp = ",";
-
         private string ContaFinanceira = string.Empty;
         private decimal SaldoAnteriorValor = 0.00M;
-        private DateTime SaldoAnteriorData;
         private decimal SaldoAtualValor = 0.00M;
+		private string ExtensaoParametro = "txt";
+
+        public List<string> LinhasEntrada { get; set; }
+        public List<string> LinhasSaida { get; set; }
+        List<Campos> DadosFinais { get; set; }
+  
+        private DateTime SaldoAnteriorData;
         private DateTime SaldoAtualData;
 
         private Campos _campos;
@@ -40,8 +44,14 @@ namespace Application
                 //saida.WriteLine(PrimeiraLinhaCsv);
                 foreach (var dados in DadosFinais)
                 {
-                    if (TransferenciaInterna(dados.Observacoes)) continue;
-                    if (PagamentoCartaoCredito(dados.Observacoes)) continue;
+                    //TODO: Gravar Transferências Internas em .csv a parte (importar ou não importar)
+                    if (ParametroOperacional(TransferenciasInternas, dados.Observacoes)) continue;
+                    //
+
+                    //TODO: Gravar Pagamento Cartao de Crétido em .csv a parte (importar ou não importar)
+                    if (ParametroOperacional(CartaoCredito, dados.Observacoes)) continue;
+                    //
+
                     if (dados.Valor < 0)
                     {
                         saida.WriteLine(MontarLinhaSaida(dados));
@@ -50,12 +60,12 @@ namespace Application
             }
         }
 
-        private bool PagamentoCartaoCredito(string obs)
+        /*private bool PagamentoCartaoCredito(string obs)
         {
             if ((obs.Contains("Pagamento")
                  && obs.Contains("BANCO SANTANDER"))) return true;
             return false;
-        }
+        }*/
 
         private string MontarLinhaSaida(Campos dados)
         {
@@ -112,11 +122,16 @@ namespace Application
             }
         }
 
-        private bool TransferenciaInterna(string obs)
+        private bool ParametroOperacional(string parametro, string obs)
         {
-            if ((obs.Contains("Transferência on line") 
-                || obs.Contains("Transferência Agendada"))
-                && (obs.Contains("ADMILSON") || (obs.Contains("CLAUDIA RENATA")))) return true;
+            var parametrosOperacionais = new ParametrosOperacionais {
+                Caminho = "../../files/param/",
+                Nome = string.Format("{0}.{1}", parametro, ExtensaoParametro)
+            };
+            foreach (var item in parametrosOperacionais.ObterParametrosOperacionais())
+            {
+                if (ExisteEstaInformacao(obs, item)) { return true; }
+            }
             return false;
         }
 
@@ -209,6 +224,18 @@ namespace Application
             r = Decimal.Parse(valor[0].ToString());
             if (linha.Contains("(-)")) r = r * -1;
             return r;
+        }
+
+        private bool ExisteEstaInformacao(string linha, string info) {
+            var expr = string.Empty;
+            foreach (var item in info.Split(' '))
+            {
+                expr += string.Format(".*{0}", item);
+            }
+            expr += ".*";
+            var regEx = new Regex(expr, RegexOptions.Singleline);
+            var valor = regEx.Matches(linha);
+            return (valor.Count > 0);
         }
 
         private void TratarNomeArquivo()
