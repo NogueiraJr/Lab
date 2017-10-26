@@ -10,6 +10,8 @@ namespace Application
 		//private const string PrimeiraLinhaCsv = "Descricao;Valor;DataVencimento;Categoria;SubCategoria;Conta;Observacao";
         private const string TransferenciasInternas = "TransferenciasInternas";
         private const string CartaoCredito = "CartaoCredito";
+        private const string LinhasIgnoradas = "LinhasIgnoradas";
+        private const string ArquivoCategorias = "ArquivoCategorias";
         private const string ContaJuridica = "Teste";
 		private const string SeparadorCampoApp = ",";
         private string ContaFinanceira = string.Empty;
@@ -20,7 +22,9 @@ namespace Application
         public List<string> LinhasEntrada { get; set; }
         public List<string> LinhasSaida { get; set; }
         List<Campos> DadosFinais { get; set; }
-  
+        public string _categoria { get; private set; }
+        public string _subCategoria { get; private set; }
+
         private DateTime SaldoAnteriorData;
         private DateTime SaldoAtualData;
 
@@ -44,14 +48,8 @@ namespace Application
                 //saida.WriteLine(PrimeiraLinhaCsv);
                 foreach (var dados in DadosFinais)
                 {
-                    //TODO: Gravar Transferências Internas em .csv a parte (importar ou não importar)
                     if (ParametroOperacional(TransferenciasInternas, dados.Observacoes)) continue;
-                    //
-
-                    //TODO: Gravar Pagamento Cartao de Crétido em .csv a parte (importar ou não importar)
                     if (ParametroOperacional(CartaoCredito, dados.Observacoes)) continue;
-                    //
-
                     if (dados.Valor < 0)
                     {
                         saida.WriteLine(MontarLinhaSaida(dados));
@@ -59,13 +57,6 @@ namespace Application
                 }
             }
         }
-
-        /*private bool PagamentoCartaoCredito(string obs)
-        {
-            if ((obs.Contains("Pagamento")
-                 && obs.Contains("BANCO SANTANDER"))) return true;
-            return false;
-        }*/
 
         private string MontarLinhaSaida(Campos dados)
         {
@@ -87,7 +78,7 @@ namespace Application
             {
                 var linhaTratada = TratarLinhasDiferenciadas(linha);
                 if (linhaTratada.Trim().Length == 0) continue;
-                if (IdentificadaLinhaComplementar(linhaTratada))
+                if ((IdentificadaLinhaComplementar(linhaTratada)) && (_campos != null))
                 {
                     campos = new Campos();
                     campos = _campos;
@@ -102,16 +93,15 @@ namespace Application
                     observacoes = TratarObservacoes(linhaTratada,
                                          dataVcto.ToShortDateString(),
                                          valor.ToString("N2"));
-                    var categoria = ObterCategoria(observacoes);
-                    var subCategoria = ObterSubCategoria(observacoes);
+                    ObterCategoriaSubCategoria(observacoes, valor);
                     #endregion
                     campos = new Campos()
                     {
-                        Descricao = string.Format("{0} | {1}", categoria, subCategoria),
+                        Descricao = string.Format("{0} | {1}", _categoria, _subCategoria),
                         Valor = valor,
                         DataVencimento = dataVcto,
-                        Categoria = categoria,
-                        SubCategoria = subCategoria,
+                        Categoria = _categoria,
+                        SubCategoria = _subCategoria,
                         Conta = ContaFinanceira,
                         Observacoes = observacoes
                     };
@@ -124,10 +114,7 @@ namespace Application
 
         private bool ParametroOperacional(string parametro, string obs)
         {
-            var parametrosOperacionais = new ParametrosOperacionais {
-                Caminho = "../../files/param/",
-                Nome = string.Format("{0}.{1}", parametro, ExtensaoParametro)
-            };
+            ParametrosOperacionais parametrosOperacionais = CriarObjetoParametrosOperacionais(parametro);
             foreach (var item in parametrosOperacionais.ObterParametrosOperacionais())
             {
                 if (ExisteEstaInformacao(obs, item)) { return true; }
@@ -135,14 +122,33 @@ namespace Application
             return false;
         }
 
-        private string ObterSubCategoria(string obs)
+        private ParametrosOperacionais CriarObjetoParametrosOperacionais(string parametro)
         {
-            return "Semanal";
+            return new ParametrosOperacionais
+            {
+                Caminho = "../../files/param/",
+                Nome = string.Format("{0}.{1}", parametro, ExtensaoParametro)
+            };
         }
 
-        private string ObterCategoria(string obs)
+        private void ObterCategoriaSubCategoria(string info, decimal paramValor)
         {
-            return "Supermercado";
+            ParametrosOperacionais parametrosOperacionais = CriarObjetoParametrosOperacionais(ArquivoCategorias);
+            foreach (var item in parametrosOperacionais.ObterParametrosOperacionais())
+            {
+                if (item.Length <= 0) continue;
+                var referencia = item.Trim().Split('|')[2];
+                var valor = Convert.ToDecimal(item.Trim().Split('|')[3]);
+                if (valor > 0) valor = valor * -1;
+                if (ExisteEstaInformacao(item, info)) {
+                    if (valor < 0) if (valor != paramValor) continue;
+                    _categoria = item.Trim().Split('|')[0];
+                    _subCategoria = item.Trim().Split('|')[1];
+                    return;
+                }
+            }
+            _categoria = "Outros";
+			_subCategoria = "Outros";
         }
 
         private string TratarObservacoes(string linhaTratada, string data, string valor)
@@ -170,22 +176,9 @@ namespace Application
 
         private string TratarLinhasDiferenciadas(string linha)
         {
-			#region Ignorados
-			if (linha.Contains("Extrato de Conta Corrente")) return string.Empty;
-			if (linha.Contains("Lançamentos")) return string.Empty;
-			if (linha.Contains("Dia Histórico Valor")) return string.Empty;
-			if (linha.Contains("Informações Adicionais")) return string.Empty;
-			if (linha.Contains("Informações Adicionais")) return string.Empty;
-			if (linha.Contains("Juros ")) return string.Empty;
-			if (linha.Contains("Data de Debito de Juros")) return string.Empty;
-			if (linha.Contains("IOF ")) return string.Empty;
-			if (linha.Contains("Data de Debito de IOF ")) return string.Empty;
-			if (linha.Contains("Lançamentos Futuros")) return string.Empty;
-			if (linha.Contains("Total Aplicações Financeiras ")) return string.Empty;
-			if (linha.Contains("Saldos por dia Base")) return string.Empty;
-			if (linha.Contains("Sujeitos a confirmação no momento da contratação")) return string.Empty;
-			if (linha.Contains("S A L D O")) return string.Empty;
-			#endregion
+            #region Ignorados
+            if (ParametroOperacional(LinhasIgnoradas, linha)) return string.Empty;
+            #endregion
 			
             #region Cabeçalho
             if (linha.Contains("Cliente: OCTAL SYSTEM SC LTDA")) { ContaFinanceira = ContaJuridica; return string.Empty; }

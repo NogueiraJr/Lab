@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace Application
@@ -28,7 +27,7 @@ namespace Application
                 do
                 {
                     linha = arquivo.ReadLine();
-                    if (linha.Length > 0)
+                    if (linha != null) if (linha.Length > 0)
                     {
                         Info.Add(linha);
                     }
