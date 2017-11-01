@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Application.Helper;
 
 namespace Application
 {
@@ -29,9 +30,14 @@ namespace Application
         private DateTime SaldoAtualData;
 
         private Campos _campos;
+        private Log log;
 
         public ArquivoFinalCsv() {
             DadosFinais = new List<Campos>();
+            log = new Log() {
+                Caminho = "../../files/log/",
+                Nome = string.Format("Log.{0}.txt", DateTime.Now.ToString("yyyyMMdd"))
+            };
         }
 
         public void GerarArquivoFinal()
@@ -76,40 +82,57 @@ namespace Application
             string observacoes = string.Empty;
             foreach (var linha in LinhasEntrada)
             {
-                var linhaTratada = TratarLinhasDiferenciadas(linha);
-                if (linhaTratada.Trim().Length == 0) continue;
-                if ((IdentificadaLinhaComplementar(linhaTratada)) && (_campos != null))
+                try
                 {
-                    campos = new Campos();
-                    campos = _campos;
-                    campos.Observacoes += string.Format(" {0}", TirarEspacosDuplos(linhaTratada));
-                    if (DadosFinais.Count > 0) DadosFinais.RemoveAt(DadosFinais.Count - 1);
-                }
-                else
-                {
-                    #region Tratar campo a campo
-                    var valor = ObterValor(linhaTratada);
-                    var dataVcto = ObterData(linhaTratada);
-                    observacoes = TratarObservacoes(linhaTratada,
-                                         dataVcto.ToShortDateString(),
-                                         valor.ToString("N2"));
-                    ObterCategoriaSubCategoria(observacoes, valor);
-                    #endregion
-                    campos = new Campos()
+					campos = new Campos();
+                    var linhaTratada = TratarLinhasDiferenciadas(linha);
+                    if (linhaTratada.Trim().Length == 0) continue;
+                    if ((IdentificadaLinhaComplementar(linhaTratada)) && (_campos != null))
                     {
-                        Descricao = string.Format("{0} | {1}", _categoria, _subCategoria),
-                        Valor = valor,
-                        DataVencimento = dataVcto,
-                        Categoria = _categoria,
-                        SubCategoria = _subCategoria,
-                        Conta = ContaFinanceira,
-                        Observacoes = observacoes
-                    };
-                }
+                        campos = _campos;
+                        campos.Observacoes += string.Format(" {0}", TirarEspacosDuplos(linhaTratada));
+                        if (DadosFinais.Count > 0) DadosFinais.RemoveAt(DadosFinais.Count - 1);
+                    }
+                    else
+                    {
+                        #region Tratar campo a campo
+                        var valor = ObterValor(linhaTratada);
+                        var dataVcto = ObterData(linhaTratada);
+                        observacoes = TratarObservacoes(linhaTratada,
+                                             dataVcto.ToShortDateString(),
+                                             valor.ToString("N2"));
+                        if (EntradaDuplicada(valor, dataVcto, observacoes)) continue;
+                        if (!ObterCategoriaSubCategoria(observacoes, valor))
+                        {
+                            log.RegistrarLog(string.Format("SEM CATEGORIA {0}", linha));
+                            _campos = campos;
+                            continue;
+                        }
+                        #endregion
+                        campos = new Campos()
+                        {
+                            Descricao = string.Format("{0} | {1}", _categoria, _subCategoria),
+                            Valor = valor,
+                            DataVencimento = dataVcto,
+                            Categoria = _categoria,
+                            SubCategoria = _subCategoria,
+                            Conta = ContaFinanceira,
+                            Observacoes = observacoes
+                        };
+                    }
 
-				DadosFinais.Add(campos);
-                _campos = campos;
+                    DadosFinais.Add(campos);
+                    _campos = campos;
+                }
+                catch (Exception ex)
+                {
+                    log.RegistrarLog(string.Format("ERRO montando os dados finais. Linha [{0}] Erro {1} ", linha, ex.Message));
+                }
             }
+        }
+
+        private bool EntradaDuplicada(decimal valor, DateTime dataVcto, string observacoes) {
+            return DadosFinais.FindAll(f => f.Valor == valor && f.DataVencimento == dataVcto && f.Observacoes == observacoes).Count > 0;
         }
 
         private bool ParametroOperacional(string parametro, string obs)
@@ -131,7 +154,7 @@ namespace Application
             };
         }
 
-        private void ObterCategoriaSubCategoria(string info, decimal paramValor)
+        private bool ObterCategoriaSubCategoria(string info, decimal paramValor)
         {
             ParametrosOperacionais parametrosOperacionais = CriarObjetoParametrosOperacionais(ArquivoCategorias);
             foreach (var item in parametrosOperacionais.ObterParametrosOperacionais())
@@ -144,11 +167,12 @@ namespace Application
                     if (valor < 0) if (valor != paramValor) continue;
                     _categoria = item.Trim().Split('|')[0];
                     _subCategoria = item.Trim().Split('|')[1];
-                    return;
+                    return true;
                 }
             }
             _categoria = "Outros";
 			_subCategoria = "Outros";
+            return false;
         }
 
         private string TratarObservacoes(string linhaTratada, string data, string valor)
