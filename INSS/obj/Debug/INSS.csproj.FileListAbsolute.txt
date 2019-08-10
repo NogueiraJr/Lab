@@ -1,0 +1,5 @@
+/Users/Nogueira/Projects/WDG/INSS/bin/Debug/INSS.dll
+/Users/Nogueira/Projects/WDG/INSS/bin/Debug/INSS.pdb
+/Users/Nogueira/Projects/WDG/INSS/obj/Debug/INSS.csproj.CoreCompileInputs.cache
+/Users/Nogueira/Projects/WDG/INSS/obj/Debug/INSS.dll
+/Users/Nogueira/Projects/WDG/INSS/obj/Debug/INSS.pdb

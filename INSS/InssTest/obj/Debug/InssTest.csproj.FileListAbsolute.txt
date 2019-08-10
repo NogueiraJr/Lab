@@ -1,0 +1,8 @@
+/Users/Nogueira/Projects/WDG/INSS/InssTest/bin/Debug/InssTest.exe
+/Users/Nogueira/Projects/WDG/INSS/InssTest/bin/Debug/InssTest.pdb
+/Users/Nogueira/Projects/WDG/INSS/InssTest/bin/Debug/INSS.dll
+/Users/Nogueira/Projects/WDG/INSS/InssTest/bin/Debug/INSS.pdb
+/Users/Nogueira/Projects/WDG/INSS/InssTest/obj/Debug/InssTest.csprojResolveAssemblyReference.cache
+/Users/Nogueira/Projects/WDG/INSS/InssTest/obj/Debug/InssTest.csproj.CoreCompileInputs.cache
+/Users/Nogueira/Projects/WDG/INSS/InssTest/obj/Debug/InssTest.exe
+/Users/Nogueira/Projects/WDG/INSS/InssTest/obj/Debug/InssTest.pdb
