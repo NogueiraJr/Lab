@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "f2009151-688c-4761-9bfc-13ca4fb45853",
+		"name": "Produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obter Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos"
+					]
+				},
+				"description": "Obter Todos os Clientes."
+			},
+			"response": []
+		},
+		{
+			"name": "Obter Específico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"1"
+					]
+				},
+				"description": "Obtem um Cliente por Id."
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nomeProduto\": \"Novo Produto\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos"
+					]
+				},
+				"description": "Insere um Cliente"
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Produtos_id\": 6,\n    \"nomeProduto\": \"Produto 06 a ser apagado\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"6"
+					]
+				},
+				"description": "Alterar um Cliente."
+			},
+			"response": []
+		},
+		{
+			"name": "Apagar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"6"
+					]
+				},
+				"description": "Apagar um Cliente por Id."
+			},
+			"response": []
+		}
+	]
+}

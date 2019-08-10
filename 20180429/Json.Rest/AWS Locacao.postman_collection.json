@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "2f6cfaf9-355e-4bbe-845d-dca597c97d32",
+		"name": "AWS Locacao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obter Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://54.233.216.237/vestbem/api/locacoes",
+					"protocol": "http",
+					"host": [
+						"54",
+						"233",
+						"216",
+						"237"
+					],
+					"path": [
+						"vestbem",
+						"api",
+						"locacoes"
+					]
+				},
+				"description": "Obter Todos os Clientes."
+			},
+			"response": []
+		},
+		{
+			"name": "Obter Específico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://54.233.216.237/vestbem/api/locacoes/3",
+					"protocol": "http",
+					"host": [
+						"54",
+						"233",
+						"216",
+						"237"
+					],
+					"path": [
+						"vestbem",
+						"api",
+						"locacoes",
+						"3"
+					]
+				},
+				"description": "Obtem um Cliente por Id."
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idCliente\": \"1\",\n    \"dtReserva\": \"2018/04/30\",\n    \"dtRetirada\": \"2018/05/20\",\n    \"dtDevolucao\": \"2018/05/25\"\n}"
+				},
+				"url": {
+					"raw": "http://54.233.216.237/vestbem/api/locacoes",
+					"protocol": "http",
+					"host": [
+						"54",
+						"233",
+						"216",
+						"237"
+					],
+					"path": [
+						"vestbem",
+						"api",
+						"locacoes"
+					]
+				},
+				"description": "Insere um Cliente"
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Locacoes_id\": 6,\n    \"Clientes_id\": 2,\n    \"dtReserva\": \"2018-05-17T00:00:00\",\n    \"dtRetirada\": \"2018-05-22T00:00:00\",\n    \"dtDevolucao\": \"2018-05-25T00:00:00\"\n}"
+				},
+				"url": {
+					"raw": "http://54.233.216.237/vestbem/api/locacoes/6",
+					"protocol": "http",
+					"host": [
+						"54",
+						"233",
+						"216",
+						"237"
+					],
+					"path": [
+						"vestbem",
+						"api",
+						"locacoes",
+						"6"
+					]
+				},
+				"description": "Alterar um Cliente."
+			},
+			"response": []
+		},
+		{
+			"name": "Apagar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://54.233.216.237/vestbem/api/locacoes/6",
+					"protocol": "http",
+					"host": [
+						"54",
+						"233",
+						"216",
+						"237"
+					],
+					"path": [
+						"vestbem",
+						"api",
+						"locacoes",
+						"6"
+					]
+				},
+				"description": "Apagar um Cliente por Id."
+			},
+			"response": []
+		}
+	]
+}

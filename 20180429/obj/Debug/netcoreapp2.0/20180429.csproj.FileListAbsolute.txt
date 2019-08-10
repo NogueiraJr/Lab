@@ -1,0 +1,10 @@
+/Users/Nogueira/Projects/20180429/bin/Debug/netcoreapp2.0/20180429.deps.json
+/Users/Nogueira/Projects/20180429/bin/Debug/netcoreapp2.0/20180429.runtimeconfig.json
+/Users/Nogueira/Projects/20180429/bin/Debug/netcoreapp2.0/20180429.runtimeconfig.dev.json
+/Users/Nogueira/Projects/20180429/bin/Debug/netcoreapp2.0/20180429.dll
+/Users/Nogueira/Projects/20180429/bin/Debug/netcoreapp2.0/20180429.pdb
+/Users/Nogueira/Projects/20180429/obj/Debug/netcoreapp2.0/20180429.csproj.CoreCompileInputs.cache
+/Users/Nogueira/Projects/20180429/obj/Debug/netcoreapp2.0/20180429.AssemblyInfoInputs.cache
+/Users/Nogueira/Projects/20180429/obj/Debug/netcoreapp2.0/20180429.AssemblyInfo.cs
+/Users/Nogueira/Projects/20180429/obj/Debug/netcoreapp2.0/20180429.dll
+/Users/Nogueira/Projects/20180429/obj/Debug/netcoreapp2.0/20180429.pdb

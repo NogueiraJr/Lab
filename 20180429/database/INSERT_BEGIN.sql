@@ -1,0 +1,69 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+--
+-- Host: 127.0.0.1    Database: VestBemDb
+-- ------------------------------------------------------
+-- Server version	8.0.11
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `Clientes`
+--
+
+USE `VestBemDb`;
+
+LOCK TABLES `Clientes` WRITE;
+/*!40000 ALTER TABLE `Clientes` DISABLE KEYS */;
+INSERT INTO `Clientes` VALUES (1,'Fulano de Tal'),(2,'Beltrano de Tal'),(3,'Ciclano de Tal'),(4,'Deltrano de Tal'),(5,'Eltrano de Tal'),(6,'Feltrano de Tal'),(7,'Geltrano de Tal'),(8,'Heltrano de Tal'),(9,'Iltrano de Tal'),(10,'Jeltrano de Tal');
+/*!40000 ALTER TABLE `Clientes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `Locacoes`
+--
+
+LOCK TABLES `Locacoes` WRITE;
+/*!40000 ALTER TABLE `Locacoes` DISABLE KEYS */;
+INSERT INTO `Locacoes` VALUES (1,1,'2018-05-05 00:00:00','2018-05-10 00:00:00','2018-05-15 00:00:00'),(2,1,'2018-05-06 00:00:00','2018-05-11 00:00:00','2018-05-16 00:00:00'),(3,2,'2018-05-07 00:00:00','2018-05-12 00:00:00','2018-05-17 00:00:00'),(4,3,'2018-05-08 00:00:00','2018-05-13 00:00:00','2018-05-18 00:00:00'),(5,4,'2018-05-09 00:00:00','2018-05-14 00:00:00','2018-05-19 00:00:00'),(6,2,'2018-05-09 00:00:00','2018-05-14 00:00:00','2018-05-19 00:00:00'),(7,5,'2018-05-09 00:00:00','2018-05-14 00:00:00','2018-05-19 00:00:00'),(8,4,'2018-05-09 00:00:00','2018-05-14 00:00:00','2018-05-19 00:00:00'),(9,3,'2018-05-09 00:00:00','2018-05-14 00:00:00','2018-05-19 00:00:00'),(10,1,'2018-05-09 00:00:00','2018-05-14 00:00:00','2018-05-19 00:00:00');
+/*!40000 ALTER TABLE `Locacoes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `LocacoesProdutos`
+--
+
+LOCK TABLES `LocacoesProdutos` WRITE;
+/*!40000 ALTER TABLE `LocacoesProdutos` DISABLE KEYS */;
+INSERT INTO `LocacoesProdutos` VALUES (1,1,1),(2,1,2),(3,2,3),(4,3,3),(5,3,5),(6,3,4),(7,4,1),(8,4,3),(9,4,7),(10,4,5);
+/*!40000 ALTER TABLE `LocacoesProdutos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `Produtos`
+--
+
+LOCK TABLES `Produtos` WRITE;
+/*!40000 ALTER TABLE `Produtos` DISABLE KEYS */;
+INSERT INTO `Produtos` VALUES (1,'Produto 01'),(2,'Produto 02'),(3,'Produto 03'),(4,'Produto 04'),(5,'Produto 05'),(6,'Produto 06'),(7,'Produto 07'),(8,'Produto 08'),(9,'Produto 09'),(10,'Produto 10');
+/*!40000 ALTER TABLE `Produtos` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-05-06  8:40:54

@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "7fdcccc5-4061-4091-be66-e62262fab29e",
+		"name": "Locacao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obter Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/locacoes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"locacoes"
+					]
+				},
+				"description": "Obter Todos os Clientes."
+			},
+			"response": []
+		},
+		{
+			"name": "Obter Específico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/locacoes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"locacoes",
+						"3"
+					]
+				},
+				"description": "Obtem um Cliente por Id."
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idCliente\": \"1\",\n    \"dtReserva\": \"2018/04/30\",\n    \"dtRetirada\": \"2018/05/20\",\n    \"dtDevolucao\": \"2018/05/25\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/locacoes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"locacoes"
+					]
+				},
+				"description": "Insere um Cliente"
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Locacoes_id\": 6,\n    \"Clientes_id\": 2,\n    \"dtReserva\": \"2018-05-17T00:00:00\",\n    \"dtRetirada\": \"2018-05-22T00:00:00\",\n    \"dtDevolucao\": \"2018-05-25T00:00:00\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/locacoes/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"locacoes",
+						"6"
+					]
+				},
+				"description": "Alterar um Cliente."
+			},
+			"response": []
+		},
+		{
+			"name": "Apagar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/locacoes/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"locacoes",
+						"6"
+					]
+				},
+				"description": "Apagar um Cliente por Id."
+			},
+			"response": []
+		}
+	]
+}
